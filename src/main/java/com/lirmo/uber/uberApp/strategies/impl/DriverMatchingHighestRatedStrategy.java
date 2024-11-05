@@ -3,18 +3,25 @@ package com.lirmo.uber.uberApp.strategies.impl;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.lirmo.uber.uberApp.dto.RideRequestDto;
 import com.lirmo.uber.uberApp.entities.Driver;
+import com.lirmo.uber.uberApp.entities.RideRequestEntity;
+import com.lirmo.uber.uberApp.repositories.DriverRepository;
 import com.lirmo.uber.uberApp.strategies.DriverMatchingStrategy;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
-public class DriverMatchingHighestRatedStrategy implements DriverMatchingStrategy{
+@RequiredArgsConstructor
+@Transactional
+public class DriverMatchingHighestRatedStrategy implements DriverMatchingStrategy {
+
+    private final DriverRepository driverRepository;
 
     @Override
-    public List<Driver> findMatchingDriver(RideRequestDto rideRequestDto) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findMatchingDriver'");
+    public List<Driver> findMatchingDrivers(RideRequestEntity rideRequest) {
+        return driverRepository.findTopRatedTenNearByDrivers(rideRequest.getPickupLocation());
     }
-    
+
 }

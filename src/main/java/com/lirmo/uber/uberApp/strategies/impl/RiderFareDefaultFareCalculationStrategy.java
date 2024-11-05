@@ -1,16 +1,27 @@
 package com.lirmo.uber.uberApp.strategies.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-
-import com.lirmo.uber.uberApp.dto.RideRequestDto;
+import com.lirmo.uber.uberApp.entities.RideRequestEntity;
+import com.lirmo.uber.uberApp.services.DistanceService;
 import com.lirmo.uber.uberApp.strategies.RideFareCalculationStrategy;
-@Service
-public class RiderFareDefaultFareCalculationStrategy implements RideFareCalculationStrategy{
 
-    @Override
-    public double calculateFare(RideRequestDto rideRequestDto) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'calculateFare'");
-    }
-    
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class RiderFareDefaultFareCalculationStrategy implements RideFareCalculationStrategy {
+
+  private final DistanceService distanceService;
+  Logger log = LoggerFactory.getLogger(RiderFareDefaultFareCalculationStrategy.class);
+
+  @Override
+  public double calculateFare(RideRequestEntity rideRequest) {
+    double distance = distanceService.calculateDistance(rideRequest.getPickupLocation(),
+        rideRequest.getDropOffLocation());
+    log.info("calculateFare-->" + RIDE_FARE_MULTIPLIER);
+    return distance * RIDE_FARE_MULTIPLIER;
+  }
+
 }

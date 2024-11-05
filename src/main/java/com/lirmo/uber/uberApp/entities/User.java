@@ -24,6 +24,6 @@ public class User {
     private String password;
     @ElementCollection(fetch = FetchType.LAZY)
     @Enumerated(EnumType.STRING)
-    private Set<Role> role;
+    private Set<Role> roles;
 
 }

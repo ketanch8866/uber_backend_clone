@@ -1,7 +1,10 @@
 package com.lirmo.uber.uberApp.strategies;
 
-import com.lirmo.uber.uberApp.dto.RideRequestDto;
+import com.lirmo.uber.uberApp.entities.RideRequestEntity;
 
 public interface RideFareCalculationStrategy {
-    double calculateFare(RideRequestDto rideRequestDto);
+    double RIDE_FARE_MULTIPLIER = 10;
+    double SURGE_FACTOR = 2;
+
+    double calculateFare(RideRequestEntity rideRequestDto);
 }

@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class DriverDto {
     private UserDto user;
-    private Double reting;
+    private Double rating;
 }

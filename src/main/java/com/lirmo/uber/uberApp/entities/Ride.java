@@ -8,11 +8,9 @@ import com.lirmo.uber.uberApp.enums.RideStatus;
 
 import java.time.LocalDateTime;
 import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -40,14 +38,13 @@ public class Ride {
     private Driver driver;
 
     @Enumerated(EnumType.STRING)
-    @ElementCollection(fetch = FetchType.LAZY)
     private PaymentMethod paymentMethod;
 
     @Column(columnDefinition = "Geometry(Point,4326)")
     private Point pickupLocation;
 
     @Column(columnDefinition = "Geometry(Point, 4326)")
-    private Point dropOfLocation;
+    private Point dropOffLocation;
 
     @CreationTimestamp
     private LocalDateTime createdTime;

@@ -1,6 +1,5 @@
 package com.lirmo.uber.uberApp.dto;
 
-import org.locationtech.jts.geom.Point;
 import java.time.LocalDateTime;
 import com.lirmo.uber.uberApp.enums.PaymentMethod;
 import com.lirmo.uber.uberApp.enums.RideStatus;
@@ -17,14 +16,14 @@ public class RideDto {
 
     private PaymentMethod paymentMethod;
 
-    private Point pickupLocation;
+    private PointDto pickupLocation;
 
-    private Point dropOfLocation;
+    private PointDto dropOffLocation;
 
     private LocalDateTime createdTime;
 
     private RideStatus rideStatus;
-
+    private String otp;
     private Double fare;
     private LocalDateTime startedAt;
     private LocalDateTime endedAt;
