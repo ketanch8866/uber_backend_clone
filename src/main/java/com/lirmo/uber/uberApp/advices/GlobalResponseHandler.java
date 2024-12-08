@@ -1,6 +1,9 @@
 package com.lirmo.uber.uberApp.advices;
 
+import java.util.List;
+
 import org.springframework.core.MethodParameter;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
@@ -19,10 +22,14 @@ public class GlobalResponseHandler implements ResponseBodyAdvice<Object> {
             @SuppressWarnings("null") Class<? extends HttpMessageConverter<?>> converterType,
             @SuppressWarnings("null") ServerHttpRequest request,
             @SuppressWarnings("null") ServerHttpResponse response) {
-        if (body instanceof ApiResponse<?>) {
+
+        List<String> allowedRoutes = List.of("/v3/api-docs", "/actuator");
+        boolean isAllowed = allowedRoutes.stream().anyMatch(route -> request.getURI().getPath().contains(route));
+
+        if (isAllowed || (body instanceof ApiResponse<?>)) {
             return body;
         }
-        return new ApiResponse<>(body);
+        return new ApiResponse<>(body, HttpStatus.OK);
     }
 
     @Override

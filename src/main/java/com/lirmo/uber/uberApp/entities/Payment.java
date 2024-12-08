@@ -6,9 +6,20 @@ import com.lirmo.uber.uberApp.enums.PaymentMethod;
 import com.lirmo.uber.uberApp.enums.PaymentStatus;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +30,7 @@ public class Payment {
     @OneToOne(fetch = FetchType.LAZY)
     private Ride ride;
 
-    private Double amount;
+    private Double amount=0.0;
 
     @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus;

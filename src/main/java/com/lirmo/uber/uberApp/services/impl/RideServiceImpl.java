@@ -11,6 +11,7 @@ import com.lirmo.uber.uberApp.dto.RideRequestDto;
 import com.lirmo.uber.uberApp.entities.Driver;
 import com.lirmo.uber.uberApp.entities.Ride;
 import com.lirmo.uber.uberApp.entities.RideRequestEntity;
+import com.lirmo.uber.uberApp.entities.Rider;
 import com.lirmo.uber.uberApp.enums.RideStatus;
 import com.lirmo.uber.uberApp.exceptions.ResourceNotFoundException;
 import com.lirmo.uber.uberApp.repositories.RideRepository;
@@ -49,15 +50,13 @@ public class RideServiceImpl implements RideService {
     }
 
     @Override
-    public Page<Ride> getAllRidesOfRider(Long riderId, PageRequest pageRequest) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllRidesOfRider'");
+    public Page<Ride> getAllRidesOfRider(Rider rider, PageRequest pageRequest) {
+      return rideRepository.findByRider(rider,pageRequest);
     }
 
     @Override
-    public Page<Ride> getAllRidesOfDriver(Long driverId, PageRequest pageRequest) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllRidesOfDriver'");
+    public Page<Ride> getAllRidesOfDriver(Driver driver, PageRequest pageRequest) {
+        return rideRepository.findByDriver(driver,pageRequest);
     }
 
     private String generateOtp() {

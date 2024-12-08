@@ -23,11 +23,16 @@ public class RideRequestServiceImpl implements RideRequestService {
 
     @Override
     public void updateRideRequest(RideRequestEntity rideRequestEntity) {
-        boolean isRideReqestPresent = rideRequestRepo. existsById(rideRequestEntity.getId());
+        boolean isRideReqestPresent = rideRequestRepo.existsById(rideRequestEntity.getId());
         if (!isRideReqestPresent) {
             throw new ResourceNotFoundException("Ride request not found with id " + rideRequestEntity.getId());
         }
         rideRequestRepo.save(rideRequestEntity);
+    }
+
+    @Override
+    public RideRequestEntity createRideRequest(RideRequestEntity rideRequestEntity) {
+        return rideRequestRepo.save(rideRequestEntity);
     }
 
 }

@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RiderDto {
-    private Long id;
-    private UserDto user;
-    private Double rating;
+public class RatingDto {
+    
+    private Long rideId;
+    private Integer rating;
 }

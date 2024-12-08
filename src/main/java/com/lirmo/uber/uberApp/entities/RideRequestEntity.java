@@ -1,7 +1,9 @@
 package com.lirmo.uber.uberApp.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.locationtech.jts.geom.Point;
@@ -14,7 +16,12 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
-@Table(name = "ride_request")
+@Table(name = "ride_request", indexes = {
+        @Index(name = "idx_ride_request_rider", columnList = "rider_id")
+})
+@AllArgsConstructor
+@NoArgsConstructor
+
 public class RideRequestEntity {
 
     @Id

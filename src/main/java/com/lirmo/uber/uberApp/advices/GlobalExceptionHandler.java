@@ -80,6 +80,6 @@ public class GlobalExceptionHandler {
     }
 
     private ResponseEntity<ApiResponse<?>> buildApiErrorResponse(ApiError error) {
-        return new ResponseEntity<>(new ApiResponse<>(error), error.getStatus());
+        return new ResponseEntity<>(new ApiResponse<>(error,error.getStatus()), error.getStatus());
     }
 }
