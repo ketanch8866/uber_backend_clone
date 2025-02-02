@@ -1,10 +1,10 @@
 package com.lirmo.uber.uberApp.advices;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.security.sasl.AuthenticationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -16,9 +16,39 @@ import com.lirmo.uber.uberApp.exceptions.ResourceNotFoundException;
 import com.lirmo.uber.uberApp.exceptions.RideRequestCanNotAcceptedException;
 import com.lirmo.uber.uberApp.exceptions.RuntimeConflictException;
 
+import io.jsonwebtoken.JwtException;
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+
+    // @ExceptionHandler(JwtException.class)
+    // public ResponseEntity<ApiResponse<?>> handleJwtException(JwtException
+    // exception) {
+    // ApiError error = ApiError.builder()
+    // .status(HttpStatus.UNAUTHORIZED)
+    // .message(exception.getMessage())
+    // .build();
+
+    // return buildApiErrorResponse(error);
+    // }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<ApiResponse<?>> handleAuthenticationException(AuthenticationException ex) {
+        ApiError error = ApiError.builder().status(HttpStatus.UNAUTHORIZED).message(ex.getLocalizedMessage()).build();
+        return buildApiErrorResponse(error);
+    }
+
+    @ExceptionHandler(JwtException.class)
+    public ResponseEntity<ApiResponse<?>> handleJWTException(JwtException ex) {
+        ApiError error = ApiError.builder().status(HttpStatus.UNAUTHORIZED).message(ex.getLocalizedMessage()).build();
+        return buildApiErrorResponse(error);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ApiResponse<?>> handleAccessDeniedException(AccessDeniedException ex) {
+        ApiError error = ApiError.builder().status(HttpStatus.FORBIDDEN).message(ex.getLocalizedMessage()).build();
+        return buildApiErrorResponse(error);
+    }
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ApiResponse<?>> handleResourseNotFound(ResourceNotFoundException exception) {
@@ -80,6 +110,6 @@ public class GlobalExceptionHandler {
     }
 
     private ResponseEntity<ApiResponse<?>> buildApiErrorResponse(ApiError error) {
-        return new ResponseEntity<>(new ApiResponse<>(error,error.getStatus()), error.getStatus());
+        return new ResponseEntity<>(new ApiResponse<>(error, error.getStatus()), error.getStatus());
     }
 }

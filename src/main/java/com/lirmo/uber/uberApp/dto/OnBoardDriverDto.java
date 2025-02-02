@@ -6,9 +6,9 @@ import lombok.Data;
 
 @Data
 public class OnBoardDriverDto {
-    @NotNull
+    @NotNull(message = "please enter user id")
     private Long id;
-   
-    @NotBlank
+
+    @NotBlank(message = "please enter vehical id")
     private String vehicalId;
 }
